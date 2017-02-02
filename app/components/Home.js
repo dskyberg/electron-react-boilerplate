@@ -4,7 +4,19 @@ import { Link } from 'react-router';
 import styles from './Home.css';
 
 
-export default class Home extends Component {
+
+export default class Home extends Component { 
+
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      value: ''
+    };
+    const Do  = require('electron').remote.require('./remote/do');
+    const myDo = new Do();
+    myDo.something().then(value => { this.setState({value:value}); });
+  }  
+  
   render() {
     return (
       <div>
@@ -12,6 +24,7 @@ export default class Home extends Component {
           <h2>Home</h2>
           <Link to="/counter">to Counter</Link>
         </div>
+        <span>{this.state.value}</span>
       </div>
     );
   }
